@@ -157,6 +157,9 @@
       if (HasTagValue(way, 'highway', 'steps')) {
         return { permitted: false, result: { lts: 0, message: ['Cycling not possible due to highway=\'steps\' tag.'], rule: '??' } }
       }
+      if (HasTagValue(way, 'indoor', 'yes')) {
+        return { permitted: false, result: { lts: 0, message: ['Cycling not permitted due to indoor=\'yes\' tag.'], rule: '??' } }
+      }
       if (HasTagValue(way, 'bicycle', 'no')) {
         return { permitted: false, result: { lts: 0, message: ['Cycling not permitted due to bicycle=\'no\' tag.'], rule: 'p2' } }
       }
