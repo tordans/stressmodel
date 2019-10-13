@@ -154,6 +154,9 @@
 
   function bikingPermitted (way) {
     if (HasTag(way, 'highway') || HasTag(way, 'bicycle')) {
+      if (HasTagValue(way, 'highway', 'steps')) {
+        return { permitted: false, result: { lts: 0, message: ['Cycling not possible due to highway=\'steps\' tag.'], rule: '??' } }
+      }
       if (HasTagValue(way, 'bicycle', 'no')) {
         return { permitted: false, result: { lts: 0, message: ['Cycling not permitted due to bicycle=\'no\' tag.'], rule: 'p2' } }
       }
