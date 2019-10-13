@@ -48,7 +48,7 @@ class ltsanalyzer {
 
   processWays (name, childNode) {
     if (name === 'way') {
-      let newway = {level: 0, tags: {}, nodes: []}
+      let newway = {level: 0, tags: {}, nodes: [], message: []}
       let tags = childNode.tag
       if (Array.isArray(tags)) {
         for (let t in childNode.tag) {
@@ -66,6 +66,7 @@ class ltsanalyzer {
         newway.nodes.push(childNode.nd[i].ref)
       }
       newway.level = this.model.evaluateLTS(newway).lts
+      newway.message = this.model.evaluateLTS(newway).message
       if (newway.level > 0 || (this.zero && typeof newway.tags['highway'] !== 'undefined')) {
         this.ways[childNode.id] = newway
         for (let i = 0; i < newway.nodes.length; i++) {
@@ -135,6 +136,8 @@ class ltsanalyzer {
             buffer += '","name":"'
             buffer += way.tags['name']
           }
+          buffer += '","message":"'
+          buffer += way.message
           buffer += '"},"geometry":{"type":"LineString","coordinates":['
           let csep = false
           let ln = way.nodes.length
